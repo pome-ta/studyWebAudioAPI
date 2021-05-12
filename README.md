@@ -1,6 +1,11 @@
 # studyWebAudioAPI
 
 
+
+[02.とりあえず音を出す](https://www.g200kg.com/jp/docs/webaudio/generatesound.html)
+
+
+
 [Web Audio API | MDN Web Docs](https://developer.mozilla.org/ja/docs/Web/API/Web_Audio_API#guides_and_tutorials)
 
 
