@@ -13,13 +13,16 @@ osc.connect(analyser);
 analyser.connect(actx.destination);
 
 osc.start();
-console.log("おわり");
+//console.log("おわり");
 
-console.log("hi");
+//console.log("hi");
 const canvas = document.querySelector('.visualizer');
 const canvasCtx = canvas.getContext("2d");
 const intendedWidth = document.querySelector('.wrapper').clientWidth;
+//const intendedHeight = document.querySelector('.wrapper').clientHeight;
 canvas.setAttribute('width', intendedWidth);
+canvas.setAttribute('height', intendedWidth);
+
 
 
 
@@ -35,10 +38,10 @@ function visualize() {
   const draw = function() {
     requestAnimationFrame(draw);
     analyser.getByteTimeDomainData(dataArray);
-    canvasCtx.fillStyle = 'rgb(200, 200, 200)';
+    canvasCtx.fillStyle = 'rgb(3, 3, 3)';
     canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
     canvasCtx.lineWidth = 2;
-    canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
+    canvasCtx.strokeStyle = 'rgb(0, 255, 0)';
     canvasCtx.beginPath();
     const sliceWidth = WIDTH * 1.0 / bufferLength;
     let x = 0;
