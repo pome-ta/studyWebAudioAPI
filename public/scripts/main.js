@@ -4,6 +4,9 @@
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const actx = new AudioContext();
 const analyser = actx.createAnalyser();
+/*analyser.minDecibels = -90;
+analyser.maxDecibels = -10;
+analyser.smoothingTimeConstant = 0.85;*/
 const osc = actx.createOscillator();
 
 osc.connect(analyser);
@@ -30,7 +33,7 @@ function visualize() {
   canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
   
   const draw = function() {
-    let drawVisual = requestAnimationFrame(draw);
+    requestAnimationFrame(draw);
     analyser.getByteTimeDomainData(dataArray);
     canvasCtx.fillStyle = 'rgb(200, 200, 200)';
     canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
