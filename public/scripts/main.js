@@ -30,7 +30,7 @@ function visualize() {
   canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
   
   const draw = function() {
-    const drawVisual = requestAnimationFrame(draw);
+    let drawVisual = requestAnimationFrame(draw);
     analyser.getByteTimeDomainData(dataArray);
     canvasCtx.fillStyle = 'rgb(200, 200, 200)';
     canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
@@ -38,7 +38,7 @@ function visualize() {
     canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
     canvasCtx.beginPath();
     const sliceWidth = WIDTH * 1.0 / bufferLength;
-    let x;
+    let x = 0;
     for(let i = 0; i < bufferLength; i++) {
       const v = dataArray[i] / 128.0;
       const y = v * HEIGHT/2;
