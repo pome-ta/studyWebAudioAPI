@@ -1,13 +1,5 @@
 'use strict';
 
-console.log("hi");
-const canvas = document.querySelector('.visualizer');
-const canvasCtx = canvas.getContext("2d");
-const intendedWidth = document.querySelector('.wrapper').clientWidth;
-canvas.setAttribute('width', intendedWidth);
-
-
-
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const actx = new AudioContext();
@@ -16,20 +8,16 @@ const osc = actx.createOscillator();
 
 osc.connect(analyser);
 analyser.connect(actx.destination);
-visualize()
+
 osc.start();
 console.log("おわり");
 
+console.log("hi");
+const canvas = document.querySelector('.visualizer');
+const canvasCtx = canvas.getContext("2d");
+const intendedWidth = document.querySelector('.wrapper').clientWidth;
+canvas.setAttribute('width', intendedWidth);
 
-// 着火のおまじない
-const eventName = typeof document.ontouchend !== 'undefined' ? 'touchend' : 'mouseup';
-document.addEventListener(eventName, initAudioContext);
-function initAudioContext(){
-  document.removeEventListener(eventName, initAudioContext);
-  console.log("re");
-  // wake up AudioContext
-  actx.resume();
-}
 
 
 function visualize() {
@@ -67,3 +55,15 @@ function visualize() {
   };
   draw();
 }
+visualize();
+
+// 着火のおまじない
+const eventName = typeof document.ontouchend !== 'undefined' ? 'touchend' : 'mouseup';
+document.addEventListener(eventName, initAudioContext);
+function initAudioContext(){
+  document.removeEventListener(eventName, initAudioContext);
+  console.log("re");
+  // wake up AudioContext
+  actx.resume();
+}
+
