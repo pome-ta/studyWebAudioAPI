@@ -10,7 +10,27 @@ function initAudioContext(){
   document.removeEventListener(eventName, initAudioContext);
   // wake up AudioContext
   actx.resume();
+  isPlaying = true;
 }
+
+
+let isPlaying = false;
+const waves = ['sine', 'square', 'sawtooth', 'triangle'];
+
+document.querySelector('body').addEventListener(eventName, () => {
+  if (isPlaying) {
+    actx.suspend();
+    isPlaying = false;
+    // todo: `waves` を順繰り回す(非効率)
+    waves.push(osc.type);
+    waves.shift();
+    osc.type = waves[0];
+  } else {
+    actx.resume();
+    isPlaying = true;
+  }
+});
+
 
 
 const actx = new AudioContext();
@@ -21,7 +41,7 @@ analyser.minDecibels = -90;
 analyser.maxDecibels = -10;
 analyser.smoothingTimeConstant = 0.85;
 */
-
+osc.type = waves[0];
 osc.connect(analyser);
 analyser.connect(actx.destination);
 osc.start();
@@ -29,7 +49,7 @@ osc.start();
 
 
 const canvas = document.querySelector('.visualizer');
-const canvasCtx = canvas.getContext("2d");
+const cctx = canvas.getContext("2d");
 const intendedWidth = document.querySelector('.wrapper').clientWidth;
 canvas.setAttribute('width', intendedWidth);
 //canvas.setAttribute('height', intendedWidth);
@@ -41,28 +61,28 @@ function visualize() {
   analyser.fftSize = 2048;
   const bufferLength = analyser.frequencyBinCount;
   const dataArray = new Uint8Array(bufferLength);
-  canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
+  cctx.clearRect(0, 0, WIDTH, HEIGHT);
   
   const draw = () => {
     requestAnimationFrame(draw);
     analyser.getByteTimeDomainData(dataArray);
     
-    canvasCtx.fillStyle = 'rgb(3, 3, 3)';
-    canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
-    canvasCtx.lineWidth = 2;
-    canvasCtx.strokeStyle = 'rgb(0, 255, 0)';
-    canvasCtx.beginPath();
+    cctx.fillStyle = 'rgb(3, 3, 3)';
+    cctx.fillRect(0, 0, WIDTH, HEIGHT);
+    cctx.lineWidth = 1;
+    cctx.strokeStyle = 'rgb(0, 255, 0)';
+    cctx.beginPath();
     const sliceWidth = WIDTH * 1.0 / bufferLength;
     
     let x = 0;
     for (let i = 0; i < bufferLength; i++) {
       const v = dataArray[i] / 128.0;
       const y = v * HEIGHT / 2;
-      i === 0 ? canvasCtx.moveTo(x, y) : canvasCtx.lineTo(x, y);
+      i === 0 ? cctx.moveTo(x, y) : cctx.lineTo(x, y);
       x += sliceWidth;
     }
-    canvasCtx.lineTo(canvas.width, canvas.height / 2);
-    canvasCtx.stroke();
+    cctx.lineTo(canvas.width, canvas.height / 2);
+    cctx.stroke();
     
   };
   draw();
