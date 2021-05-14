@@ -14,20 +14,29 @@ function initAudioContext(){
 }
 
 
+const statusWave = document.querySelector('.btn');
+const initStr = statusWave.textContent;
+
+
 let isPlaying = false;
 const waves = ['sine', 'square', 'sawtooth', 'triangle'];
 
 document.querySelector('body').addEventListener(eventName, () => {
   if (isPlaying) {
+    statusWave.textContent = initStr;
     actx.suspend();
     isPlaying = false;
     // todo: `waves` を順繰り回す(非効率)
     waves.push(osc.type);
     waves.shift();
     osc.type = waves[0];
+    //statusWave.innerHTML = waves[0];
+    
   } else {
     actx.resume();
     isPlaying = true;
+    statusWave.textContent = waves[0];
+    //statusWave.innerHTML = 'tap';
   }
 });
 
