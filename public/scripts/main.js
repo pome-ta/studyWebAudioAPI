@@ -49,10 +49,37 @@ document.querySelector('body').addEventListener(tapStart, () => {
 */
 
 
+document.querySelector('.visualizer').addEventListener(tapStart, () => {
+  if (isPlaying) {
+    statusWave.textContent = initStr;
+    actx.suspend();
+    isPlaying = false;
+    // todo: `waves` を順繰り回す(非効率)
+    waves.push(oscNode.type);
+    waves.shift();
+    oscNode.type = waves[0];
+  } else {
+    actx.resume();
+    isPlaying = true;
+    statusWave.textContent = waves[0];
+  }
+});
+
+
+
 const volumeControl = document.querySelector('#volume');
 
 volumeControl.addEventListener('input', function() {
   gainNode.gain.value = this.value;
+  
+}, false);
+
+
+const freqControl = document.querySelector('#freq');
+
+freqControl.addEventListener('input', function() {
+  //gainNode.gain.value = this.value;
+  oscNode.frequency.setValueAtTime(this.value, actx.currentTime);
   
 }, false);
 
