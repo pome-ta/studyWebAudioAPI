@@ -3,15 +3,24 @@
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 
+
+
+const tapStart = typeof document.ontouchstart !== 'undefined' ? 'touchstart' : 'mousedown';
+const tapMove = typeof document.ontouchmove !== 'undefined' ? 'touchmove' : 'mousemove';
+const tapEnd = typeof document.ontouchend !== 'undefined' ? 'touchend' : 'mouseup';
+
 // AudioContext 着火のおまじない
-const eventName = typeof document.ontouchend !== 'undefined' ? 'touchend' : 'mouseup';
-document.addEventListener(eventName, initAudioContext);
+document.addEventListener(tapEnd, initAudioContext);
 function initAudioContext(){
-  document.removeEventListener(eventName, initAudioContext);
+  document.removeEventListener(tapEnd, initAudioContext);
   // wake up AudioContext
   actx.resume();
   isPlaying = true;
 }
+
+
+
+
 
 
 const statusWave = document.querySelector('.btn');
@@ -21,7 +30,7 @@ const initStr = statusWave.textContent;
 let isPlaying = false;
 const waves = ['sine', 'square', 'sawtooth', 'triangle'];
 
-document.querySelector('body').addEventListener(eventName, () => {
+document.querySelector('body').addEventListener(tapStart, () => {
   if (isPlaying) {
     statusWave.textContent = initStr;
     actx.suspend();
@@ -30,13 +39,10 @@ document.querySelector('body').addEventListener(eventName, () => {
     waves.push(osc.type);
     waves.shift();
     osc.type = waves[0];
-    //statusWave.innerHTML = waves[0];
-    
   } else {
     actx.resume();
     isPlaying = true;
     statusWave.textContent = waves[0];
-    //statusWave.innerHTML = 'tap';
   }
 });
 
