@@ -66,41 +66,41 @@ osc.start();
 
 
 
-const canvas = document.querySelector('.visualizer');
-const cctx = canvas.getContext("2d");
+const viCanvas = document.querySelector('.visualizer');
+const vcctx = viCanvas.getContext("2d");
 const intendedWidth = document.querySelector('.wrapper').clientWidth;
-canvas.setAttribute('width', intendedWidth);
+viCanvas.setAttribute('width', intendedWidth);
 //canvas.setAttribute('height', intendedWidth);
 
 function visualize() {
-  const WIDTH = canvas.width;
-  const HEIGHT = canvas.height;
+  const WIDTH = viCanvas.width;
+  const HEIGHT = viCanvas.height;
   
   analyser.fftSize = 2048;
   const bufferLength = analyser.frequencyBinCount;
   const dataArray = new Uint8Array(bufferLength);
-  cctx.clearRect(0, 0, WIDTH, HEIGHT);
+  vcctx.clearRect(0, 0, WIDTH, HEIGHT);
   
   const draw = () => {
     requestAnimationFrame(draw);
     analyser.getByteTimeDomainData(dataArray);
     
-    cctx.fillStyle = 'rgb(3, 3, 3)';
-    cctx.fillRect(0, 0, WIDTH, HEIGHT);
-    cctx.lineWidth = 1;
-    cctx.strokeStyle = 'rgb(0, 255, 0)';
-    cctx.beginPath();
+    vcctx.fillStyle = 'rgb(3, 3, 3)';
+    vcctx.fillRect(0, 0, WIDTH, HEIGHT);
+    vcctx.lineWidth = 1;
+    vcctx.strokeStyle = 'rgb(0, 255, 0)';
+    vcctx.beginPath();
     const sliceWidth = WIDTH * 1.0 / bufferLength;
     
     let x = 0;
     for (let i = 0; i < bufferLength; i++) {
       const v = dataArray[i] / 128.0;
       const y = v * HEIGHT / 2;
-      i === 0 ? cctx.moveTo(x, y) : cctx.lineTo(x, y);
+      i === 0 ? vcctx.moveTo(x, y) : vcctx.lineTo(x, y);
       x += sliceWidth;
     }
-    cctx.lineTo(canvas.width, canvas.height / 2);
-    cctx.stroke();
+    vcctx.lineTo(viCanvas.width, viCanvas.height / 2);
+    vcctx.stroke();
     
   };
   draw();
