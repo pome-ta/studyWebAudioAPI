@@ -52,7 +52,8 @@ document.querySelector('body').addEventListener(tapStart, () => {
 const volumeControl = document.querySelector('#volume');
 
 volumeControl.addEventListener('input', function() {
-    gainNode.gain.value = this.value;
+  gainNode.gain.value = this.value;
+  
 }, false);
 
 
@@ -60,6 +61,7 @@ volumeControl.addEventListener('input', function() {
 const actx = new AudioContext();
 const analyser = actx.createAnalyser();
 const oscNode = actx.createOscillator();
+oscNode.frequency.value = 220;
 /* todo: 差がわからない
 analyser.minDecibels = -90;
 analyser.maxDecibels = -10;
