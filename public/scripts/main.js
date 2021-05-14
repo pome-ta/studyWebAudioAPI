@@ -4,10 +4,13 @@
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 
 
+const {tapStart, tapMove, tapEnd} = {
+  tapStart: typeof document.ontouchstart !== 'undefined' ? 'touchstart' : 'mousedown',
+  tapMove: typeof document.ontouchmove !== 'undefined' ? 'touchmove' : 'mousemove',
+  tapEnd: typeof document.ontouchend !== 'undefined' ? 'touchend' : 'mouseup',
+}
 
-const tapStart = typeof document.ontouchstart !== 'undefined' ? 'touchstart' : 'mousedown';
-const tapMove = typeof document.ontouchmove !== 'undefined' ? 'touchmove' : 'mousemove';
-const tapEnd = typeof document.ontouchend !== 'undefined' ? 'touchend' : 'mouseup';
+
 
 // AudioContext 着火のおまじない
 document.addEventListener(tapEnd, initAudioContext);
