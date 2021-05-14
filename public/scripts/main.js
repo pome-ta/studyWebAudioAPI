@@ -24,45 +24,56 @@ function initAudioContext(){
 
 
 
-
-
 const statusWave = document.querySelector('.btn');
 const initStr = statusWave.textContent;
 
 
 let isPlaying = false;
 const waves = ['sine', 'square', 'sawtooth', 'triangle'];
-
+/*
 document.querySelector('body').addEventListener(tapStart, () => {
   if (isPlaying) {
     statusWave.textContent = initStr;
     actx.suspend();
     isPlaying = false;
     // todo: `waves` を順繰り回す(非効率)
-    waves.push(osc.type);
+    waves.push(oscNode.type);
     waves.shift();
-    osc.type = waves[0];
+    oscNode.type = waves[0];
   } else {
     actx.resume();
     isPlaying = true;
     statusWave.textContent = waves[0];
   }
 });
+*/
+
+
+const volumeControl = document.querySelector('#volume');
+
+volumeControl.addEventListener('input', function() {
+    gainNode.gain.value = this.value;
+}, false);
 
 
 
 const actx = new AudioContext();
 const analyser = actx.createAnalyser();
-const osc = actx.createOscillator();
+const oscNode = actx.createOscillator();
 /* todo: 差がわからない
 analyser.minDecibels = -90;
 analyser.maxDecibels = -10;
 analyser.smoothingTimeConstant = 0.85;
 */
-osc.type = waves[0];
-osc.connect(analyser);
+
+const gainNode = actx.createGain();
+
+oscNode.type = waves[0];
+//oscNode.connect(analyser);
+oscNode.connect(gainNode);
+gainNode.connect(analyser);
 analyser.connect(actx.destination);
-osc.start();
+oscNode.start();
 
 
 
@@ -70,7 +81,7 @@ const viCanvas = document.querySelector('.visualizer');
 const vcctx = viCanvas.getContext("2d");
 const intendedWidth = document.querySelector('.wrapper').clientWidth;
 viCanvas.setAttribute('width', intendedWidth);
-//canvas.setAttribute('height', intendedWidth);
+viCanvas.setAttribute('height', intendedWidth / 2);
 
 function visualize() {
   const WIDTH = viCanvas.width;
