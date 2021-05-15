@@ -1,6 +1,10 @@
 # studyWebAudioAPI
 
 
+## classわけわけ
+
+Pythonic な書き方になりそうだけど
+
 
 [02.とりあえず音を出す](https://www.g200kg.com/jp/docs/webaudio/generatesound.html)
 
