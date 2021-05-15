@@ -13,6 +13,7 @@ const {tapStart, tapMove, tapEnd} = {
 
 
 // AudioContext 着火のおまじない
+/*
 document.addEventListener(tapEnd, initAudioContext);
 function initAudioContext(){
   document.removeEventListener(tapEnd, initAudioContext);
@@ -20,11 +21,21 @@ function initAudioContext(){
   actx.resume();
   isPlaying = true;
 }
+*/
 
 
+document.querySelector('.tone').addEventListener(tapStart, () => {
+  actx.resume();
+  isPlaying = true;
+});
+
+document.querySelector('.tone').addEventListener(tapEnd, () => {
+  actx.suspend();
+  isPlaying = false;
+});
 
 
-const statusWave = document.querySelector('.btn');
+const statusWave = document.querySelector('.type');
 const initStr = statusWave.textContent;
 
 
@@ -50,20 +61,14 @@ document.querySelector('body').addEventListener(tapStart, () => {
 
 
 document.querySelector('.visualizer').addEventListener(tapStart, () => {
-  if (isPlaying) {
-    statusWave.textContent = initStr;
-    actx.suspend();
-    isPlaying = false;
-    // todo: `waves` を順繰り回す(非効率)
-    waves.push(oscNode.type);
-    waves.shift();
-    oscNode.type = waves[0];
-  } else {
-    actx.resume();
-    isPlaying = true;
-    statusWave.textContent = waves[0];
-  }
+  // todo: `waves` を順繰り回す(非効率)
+  waves.push(oscNode.type);
+  waves.shift();
+  oscNode.type = waves[0];
+  statusWave.textContent = waves[0];
 });
+
+
 
 
 

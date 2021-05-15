@@ -11,12 +11,17 @@ body {
 }
 
 
-.btn {
-  color: maroon;
-}
-
 
 input {
   width: 100%;
   height: 2rem;
+}
+
+.tone {
+  height: 8rem;
+  background-color: maroon;
+}
+
+.tone:active {
+  background-color: teal;
 }
