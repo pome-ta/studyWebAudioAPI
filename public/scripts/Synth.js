@@ -1,11 +1,22 @@
 export default class Synth {
   constructor() {
     try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext
-      this.context = new AudioContext();
+      this.AudioContext = window.AudioContext || window.webkitAudioContext
     } catch (e) {
       throw new Error('Web Audio isn\'t supported in this browser!');
     }
-    console.log("Synth hoge");
+  }
+  
+  init() {
+    this.auctx = new this.AudioContext();
+    console.log("ini", this.context);
+  }
+  
+  play() {
+    
+  }
+  
+  end() {
+    
   }
 }
