@@ -5,6 +5,11 @@
 
 Pythonic な書き方になりそうだけど
 
+### import / export
+
+- import 時の波括弧`{ hoge }` は、`export default` を使ってないとき
+- export は、`export default` 推奨
+
 
 [02.とりあえず音を出す](https://www.g200kg.com/jp/docs/webaudio/generatesound.html)
 

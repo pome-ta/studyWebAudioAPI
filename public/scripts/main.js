@@ -1,4 +1,6 @@
-'use strict';
+import Synth from './Synth.js';
+
+const synth = new Synth();
 
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
