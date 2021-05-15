@@ -83,17 +83,25 @@ freqControl.addEventListener('input', function() {
   
 }, false);
 
+const detuneControl = document.querySelector('#detune');
+
+detuneControl.addEventListener('input', function() {
+  //gainNode.gain.value = this.value;
+  oscNode.detune.setValueAtTime(this.value, actx.currentTime);
+  
+}, false);
+
 
 
 const actx = new AudioContext();
 const analyser = actx.createAnalyser();
 const oscNode = actx.createOscillator();
 oscNode.frequency.value = 220;
-/* todo: 差がわからない
+///* todo: 差がわからない
 analyser.minDecibels = -90;
 analyser.maxDecibels = -10;
-analyser.smoothingTimeConstant = 0.85;
-*/
+analyser.smoothingTimeConstant = 0.5;
+//*/
 
 const gainNode = actx.createGain();
 
