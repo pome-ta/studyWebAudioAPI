@@ -2,7 +2,25 @@ import Synth from './Synth.js';
 
 const synth = new Synth();
 
+const {tapStart, tapMove, tapEnd} = {
+  tapStart: typeof document.ontouchstart !== 'undefined' ? 'touchstart' : 'mousedown',
+  tapMove: typeof document.ontouchmove !== 'undefined' ? 'touchmove' : 'mousemove',
+  tapEnd: typeof document.ontouchend !== 'undefined' ? 'touchend' : 'mouseup',
+}
 
+
+document.querySelector('.tone').addEventListener(tapStart, () => {
+  synth.play();
+});
+
+document.querySelector('.tone').addEventListener(tapEnd, () => {
+  synth.end();
+});
+
+
+
+
+/*
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 
 
@@ -12,7 +30,7 @@ const {tapStart, tapMove, tapEnd} = {
   tapEnd: typeof document.ontouchend !== 'undefined' ? 'touchend' : 'mouseup',
 }
 
-
+*/
 
 // AudioContext 着火のおまじない
 /*
@@ -25,7 +43,7 @@ function initAudioContext(){
 }
 */
 
-
+/*
 document.querySelector('.tone').addEventListener(tapStart, () => {
   actx.resume();
   isPlaying = true;
@@ -60,7 +78,7 @@ document.querySelector('body').addEventListener(tapStart, () => {
   }
 });
 */
-
+/*
 
 document.querySelector('.visualizer').addEventListener(tapStart, () => {
   // todo: `waves` を順繰り回す(非効率)
@@ -98,17 +116,17 @@ detuneControl.addEventListener('input', function() {
   
 }, false);
 
-
-
+*/
+/*
 const actx = new AudioContext();
 const analyser = actx.createAnalyser();
 const oscNode = actx.createOscillator();
 oscNode.frequency.value = 220;
-///* todo: 差がわからない
+// todo: 差がわからない
 analyser.minDecibels = -90;
 analyser.maxDecibels = -10;
 analyser.smoothingTimeConstant = 0.5;
-//*/
+
 
 const gainNode = actx.createGain();
 
@@ -162,4 +180,4 @@ function visualize() {
 }
 
 visualize();
-
+*/
