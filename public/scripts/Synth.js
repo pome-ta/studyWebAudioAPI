@@ -6,17 +6,24 @@ export default class Synth {
       throw new Error('Web Audio isn\'t supported in this browser!');
     }
     this.isPlaying;
+    this.auctx = new this.AudioContext();
+    this.gainNode = this.auctx.createGain();
+    this.analyzeNode = this.auctx.createAnalyser();
+    this.oscNode = this.auctx.createOscillator();
   }
   
   init() {
     this.isPlaying = false;
     this.auctx = new this.AudioContext();
     this.gainNode = this.auctx.createGain();
+    this.analyzeNode = this.auctx.createAnalyser();
     this.oscNode = this.auctx.createOscillator();
     
     this.oscNode.frequency.value = 220;
     this.oscNode.connect(this.gainNode);
-    this.gainNode.connect(this.auctx.destination);
+    
+    this.gainNode.connect(this.analyzeNode);
+    this.analyzeNode.connect(this.auctx.destination);
   }
   
   

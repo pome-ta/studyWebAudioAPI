@@ -1,6 +1,6 @@
 import Synth from './Synth.js';
 
-const synth = new Synth();
+
 
 const {tapStart, tapMove, tapEnd} = {
   tapStart: typeof document.ontouchstart !== 'undefined' ? 'touchstart' : 'mousedown',
@@ -9,6 +9,7 @@ const {tapStart, tapMove, tapEnd} = {
 }
 
 
+const synth = new Synth();
 
 document.querySelector('.tone').addEventListener(tapStart, () => {
   synth.play();
@@ -19,30 +20,25 @@ document.querySelector('.tone').addEventListener(tapEnd, () => {
 });
 
 
-
-
-
-
-
-/*
 const viCanvas = document.querySelector('.visualizer');
 const vcctx = viCanvas.getContext("2d");
 const intendedWidth = document.querySelector('.wrapper').clientWidth;
 viCanvas.setAttribute('width', intendedWidth);
 viCanvas.setAttribute('height', intendedWidth / 2);
 
+
 function visualize() {
   const WIDTH = viCanvas.width;
   const HEIGHT = viCanvas.height;
   
-  analyser.fftSize = 2048;
-  const bufferLength = analyser.frequencyBinCount;
+  synth.analyzeNode.fftSize = 2048;
+  const bufferLength = synth.analyzeNode.frequencyBinCount;
   const dataArray = new Uint8Array(bufferLength);
   vcctx.clearRect(0, 0, WIDTH, HEIGHT);
   
   const draw = () => {
     requestAnimationFrame(draw);
-    analyser.getByteTimeDomainData(dataArray);
+    synth.analyzeNode.getByteTimeDomainData(dataArray);
     
     vcctx.fillStyle = 'rgb(3, 3, 3)';
     vcctx.fillRect(0, 0, WIDTH, HEIGHT);
@@ -66,4 +62,4 @@ function visualize() {
 }
 
 visualize();
-*/
+
