@@ -1,9 +1,3 @@
-const {tapStart, tapMove, tapEnd} = {
-  tapStart: typeof document.ontouchstart !== 'undefined' ? 'touchstart' : 'mousedown',
-  tapMove: typeof document.ontouchmove !== 'undefined' ? 'touchmove' : 'mousemove',
-  tapEnd: typeof document.ontouchend !== 'undefined' ? 'touchend' : 'mouseup',
-}
-
 export default class Synth {
   constructor() {
     try {
@@ -23,11 +17,6 @@ export default class Synth {
     this.oscNode.frequency.value = 220;
     this.oscNode.connect(this.gainNode);
     this.gainNode.connect(this.auctx.destination);
-    
-
-    //this.oscNode.start();
-    
-    //console.log("ini", this.context);
   }
   
   
@@ -35,16 +24,6 @@ export default class Synth {
   play() {
     this.init();
     this.oscNode.start();
-    /*
-    document.addEventListener(tapEnd, initAudioContext);
-    function initAudioContext(){
-      document.removeEventListener(tapEnd, initAudioContext);
-      // wake up AudioContext
-      //this.auctx.resume();
-      //console.log('hoge');
-      //this.oscNode.start();
-    }
-    */
     this.isPlaying = true;
     
     

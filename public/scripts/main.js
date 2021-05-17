@@ -9,6 +9,7 @@ const {tapStart, tapMove, tapEnd} = {
 }
 
 
+
 document.querySelector('.tone').addEventListener(tapStart, () => {
   synth.play();
 });
@@ -20,125 +21,10 @@ document.querySelector('.tone').addEventListener(tapEnd, () => {
 
 
 
-/*
-const AudioContext = window.AudioContext || window.webkitAudioContext;
 
 
-const {tapStart, tapMove, tapEnd} = {
-  tapStart: typeof document.ontouchstart !== 'undefined' ? 'touchstart' : 'mousedown',
-  tapMove: typeof document.ontouchmove !== 'undefined' ? 'touchmove' : 'mousemove',
-  tapEnd: typeof document.ontouchend !== 'undefined' ? 'touchend' : 'mouseup',
-}
-
-*/
-
-// AudioContext 着火のおまじない
-/*
-document.addEventListener(tapEnd, initAudioContext);
-function initAudioContext(){
-  document.removeEventListener(tapEnd, initAudioContext);
-  // wake up AudioContext
-  actx.resume();
-  isPlaying = true;
-}
-*/
 
 /*
-document.querySelector('.tone').addEventListener(tapStart, () => {
-  actx.resume();
-  isPlaying = true;
-});
-
-document.querySelector('.tone').addEventListener(tapEnd, () => {
-  actx.suspend();
-  isPlaying = false;
-});
-
-
-const statusWave = document.querySelector('.type');
-const initStr = statusWave.textContent;
-
-
-let isPlaying = false;
-const waves = ['sine', 'square', 'sawtooth', 'triangle'];
-/*
-document.querySelector('body').addEventListener(tapStart, () => {
-  if (isPlaying) {
-    statusWave.textContent = initStr;
-    actx.suspend();
-    isPlaying = false;
-    // todo: `waves` を順繰り回す(非効率)
-    waves.push(oscNode.type);
-    waves.shift();
-    oscNode.type = waves[0];
-  } else {
-    actx.resume();
-    isPlaying = true;
-    statusWave.textContent = waves[0];
-  }
-});
-*/
-/*
-
-document.querySelector('.visualizer').addEventListener(tapStart, () => {
-  // todo: `waves` を順繰り回す(非効率)
-  waves.push(oscNode.type);
-  waves.shift();
-  oscNode.type = waves[0];
-  statusWave.textContent = waves[0];
-});
-
-
-
-
-
-const volumeControl = document.querySelector('#volume');
-
-volumeControl.addEventListener('input', function() {
-  gainNode.gain.value = this.value;
-  
-}, false);
-
-
-const freqControl = document.querySelector('#freq');
-
-freqControl.addEventListener('input', function() {
-  //gainNode.gain.value = this.value;
-  oscNode.frequency.setValueAtTime(this.value, actx.currentTime);
-  
-}, false);
-
-const detuneControl = document.querySelector('#detune');
-
-detuneControl.addEventListener('input', function() {
-  //gainNode.gain.value = this.value;
-  oscNode.detune.setValueAtTime(this.value, actx.currentTime);
-  
-}, false);
-
-*/
-/*
-const actx = new AudioContext();
-const analyser = actx.createAnalyser();
-const oscNode = actx.createOscillator();
-oscNode.frequency.value = 220;
-// todo: 差がわからない
-analyser.minDecibels = -90;
-analyser.maxDecibels = -10;
-analyser.smoothingTimeConstant = 0.5;
-
-
-const gainNode = actx.createGain();
-
-oscNode.type = waves[0];
-//oscNode.connect(analyser);
-oscNode.connect(gainNode);
-gainNode.connect(analyser);
-analyser.connect(actx.destination);
-oscNode.start();
-
-
-
 const viCanvas = document.querySelector('.visualizer');
 const vcctx = viCanvas.getContext("2d");
 const intendedWidth = document.querySelector('.wrapper').clientWidth;
