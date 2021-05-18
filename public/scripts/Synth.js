@@ -11,11 +11,12 @@ export default class Synth {
   
   init() {
     this.isPlaying = false;
+    this.intervalid = null;
     
     this.attack  = 0.5;
-    this.decay   = 0.3;
+    this.decay   = 0.2;
     this.sustain = 0.5;
-    this.release = 1.0;
+    this.release = 0.3;
     
     this.auctx = new this.AudioContext();
     //this.gainNode = this.auctx.createGain();
@@ -27,30 +28,24 @@ export default class Synth {
     this.oscNode.frequency.value = 220;
     
     this.oscNode.connect(this.eg);
-    this.eg.connect(this.analyzeNode);
+    this.eg.connect(this.masterVolume);
+    this.masterVolume.connect(this.analyzeNode);
+    
     this.analyzeNode.connect(this.auctx.destination);
     
     this.t0 = this.auctx.currentTime;
-    this.t1 = this.t0 + attack;
+    this.t1 = this.t0 + this.attack;
+    //this.eg.gain.value = 0;
+    //this.eg.gain.setTargetAtTime(1, this.t0, this.t1);
     this.eg.gain.linearRampToValueAtTime(1, this.t1);
-    /*
-    this.t2 = decay;
-    this.t2Value = sustain;
+    
+    this.t2 = this.decay;
+    this.t2Value = this.sustain;
     this.eg.gain.setTargetAtTime(this.t2Value, this.t1, this.t2);
     this.t3 = this.auctx.currentTime;
-    this.t4 = release;
+    this.t4 = this.release;
     this.eg.gain.setTargetAtTime(0, this.t3, this.t4);
-    this.intervalid = null;
-    this.intervalid = window.setInterval(function() {
-      const VALUE_OF_STOP = 1e-3;
-      if (eg.gain.value < VALUE_OF_STOP) {
-        this.oscNode.stop(0);
-        if (intervalid !== null) {
-          window.clearInterval(this.intervalid);
-          this.intervalid = null;
-        }
-      }
-    })*/
+    
     
   }
   
@@ -58,15 +53,35 @@ export default class Synth {
   
   play() {
     this.init();
+    if (this.isPlaying) {
+      this.oscNode.stop(0);
+    }
+    //this.eg.gain.setTargetAtTime(1, this.t0, this.t1);
+    this.t0 = this.auctx.currentTime;
+    
+    
+    this.t1 = this.t0 + this.attack;
+    this.t2 = this.decay;
+    this.t2Value = this.sustain;
+    this.eg.gain.linearRampToValueAtTime(1, this.t1);
+    this.eg.gain.setTargetAtTime(this.t2Value, this.t1, this.t2);
+    
     this.oscNode.start(this.t0);
+    
+    
     this.isPlaying = true;
-    
-    
+    //console.log(typeof this.eg.gain.value);
   }
   
   end() {
-    this.oscNode.stop();
+    if (!this.isPlaying) {
+      return;
+    }
+    this.t3 = this.auctx.currentTime;
+    this.t4 = this.release;
+    this.eg.gain.cancelScheduledValues(this.t3);
+    this.eg.gain.setValueAtTime(this.eg.gain.value, this.t3);
+    this.eg.gain.setTargetAtTime(0, this.t3, this.t4);
     this.isPlaying = false;
-    
   }
 }
