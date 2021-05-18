@@ -11,22 +11,32 @@ const {tapStart, tapMove, tapEnd} = {
 
 const synth = new Synth();
 
-document.querySelector('.tone').addEventListener(tapStart, () => {
+document.querySelector('.tone').addEventListener(tapStart, (e) => {
+  e.preventDefault();
   synth.play();
 });
+
 
 document.querySelector('.tone').addEventListener(tapEnd, () => {
   synth.end();
 });
 
 
-const viCanvas = document.querySelector('.visualizer');
-const vcctx = viCanvas.getContext("2d");
-const intendedWidth = document.querySelector('.wrapper').clientWidth;
-viCanvas.setAttribute('width', intendedWidth);
-viCanvas.setAttribute('height', intendedWidth / 2);
+
+const volumeControl = document.querySelector('#volume');
+volumeControl.addEventListener('input', function() {
+  synth.eg.gain.value = this.value;
+});
+
+const freqControl = document.querySelector('#freq');
+freqControl.addEventListener('input', function() {
+  //gainNode.gain.value = this.value;
+  synth.oscNode.frequency.setValueAtTime(this.value, synth.auctx.currentTime);
+  
+}, false);
 
 
+/* visualizar */
 function visualize() {
   const WIDTH = viCanvas.width;
   const HEIGHT = viCanvas.height;
@@ -51,6 +61,7 @@ function visualize() {
     for (let i = 0; i < bufferLength; i++) {
       const v = dataArray[i] / 128.0;
       const y = v * HEIGHT / 2;
+      // todo: ショートハンドすぎる？
       i === 0 ? vcctx.moveTo(x, y) : vcctx.lineTo(x, y);
       x += sliceWidth;
     }
@@ -60,6 +71,12 @@ function visualize() {
   };
   draw();
 }
+
+const viCanvas = document.querySelector('.visualizer');
+const vcctx = viCanvas.getContext("2d");
+const intendedWidth = document.querySelector('.wrapper').clientWidth;
+viCanvas.setAttribute('width', intendedWidth);
+viCanvas.setAttribute('height', intendedWidth / 2);
 
 visualize();
 

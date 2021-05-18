@@ -1,6 +1,50 @@
 # studyWebAudioAPI
 
 
+
+
+[mmckegg / web-audio-school](https://github.com/mmckegg/web-audio-school)
+
+## キー指定の計算
+
+[http://mmckegg.github.io/web-audio-school/](http://mmckegg.github.io/web-audio-school/)
+
+
+### Chromatic Scale
+
+```
+                         -3  -1   1       4   6       9   11
+                       -4  -2   0   2   3   5   7   8   10  12
+  .___________________________________________________________________________.
+  :  | |  |  | | | |  |  | | | | | |  |  | | | |  |  | | | | | |  |  | | | |  :
+  :  | |  |  | | | |  |  | | | | | |  |  | | | |  |  | | | | | |  |  | | | |  :
+  :  | |  |  | | | |  |  | | | | | |  |  | | | |  |  | | | | | |  |  | | | |  :
+<-:  |_|  |  |_| |_|  |  |_| |_| |_|  |  |_| |_|  |  |_| |_| |_|  |  |_| |_|  :->
+  :   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   :
+  : A | B | C | D | E | F | G | A | B | C | D | E | F | G | A | B | C | D | E :
+  :___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___: 
+    ^                           ^           ^               ^           ^
+  220 Hz                      440 Hz      523.25 Hz       880 Hz     1174.65 Hz
+(-1 Octave)                 (middle A)                 (+1 Octave)
+
+```
+
+#### A(440) -> E
+
+```js
+oscillator.frequency.value = 440 * Math.pow(2, 7 / 12) // 659.255...
+```
+
+#### A(440) -> G
+
+```js
+oscillator.frequency.value = 440 * Math.pow(2, -14 / 12) // 195.998...
+```
+
+
+
+
+
 ## classわけわけ
 
 Pythonic な書き方になりそうだけど
