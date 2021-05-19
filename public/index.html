@@ -19,48 +19,44 @@
   <canvas class="visualizer" width="320" height="64"></canvas>
 </div>
 
-
 <div class="controller">
-  <div class="params">
-    <div class="names">Volume</div>
-    <div class="valus">0.0</div>
-  </div>
-  <input type="range" id="volume" min="0" max="2" value="1" step="0.01">
-  <div class="btm"></div>
-  
-  <div class="params">
-    <div class="names">Frequency</div>
-    <div class="valus">0.0</div>
-  </div>
-  <input type="range" id="freq" min="20" max="880" value="440" step="0.1">
-  <div class="btm"></div>
-  
-  <div class="params">
-    <div class="adsr">
-      <div class="names">attack</div>
-      <div class="valus">0.0</div>
-      <input type="range" id="volume" min="0" max="2" value="1" step="0.01">
-    </div>
-    <div class="adsr">
-      <div class="names">decay</div>
-      <div class="valus">0.0</div>
-      <input type="range" id="volume" min="0" max="2" value="1" step="0.01">
-    </div>
-    <div class="adsr">
-      <div class="names">sustain</div>
-      <div class="valus">0.0</div>
-      <input type="range" id="volume" min="0" max="2" value="1" step="0.01">
-    </div>
-    <div class="adsr">
-      <div class="names">release</div>
-      <div class="valus">0.0</div>
-      <input type="range" id="volume" min="0" max="2" value="1" step="0.01">
-    </div>
-  </div>
-  
-  
-  
+<div class="cn">
+  <p>Volume</p>
+  <p id="vol-param">0.0</p>
 </div>
+  <input type="range" id="volume" min="0" max="2" value="1" step="0.01">
+
+<div class="cn">
+  <p>Frequency</p>
+  <p id="frq-param">0.0</p>
+</div>
+  <input type="range" id="freq" min="20" max="880" value="440" step="0.1">
+
+<div class="cn">
+  <p>Attack</p>
+  <p id="a-param">0.0</p>
+</div>
+  <input type="range" id="freq" min="20" max="880" value="440" step="0.1">
+
+<div class="cn">
+  <p>Decay</p>
+  <p id="d-param">0.0</p>
+</div>
+  <input type="range" id="freq" min="20" max="880" value="440" step="0.1">
+
+<div class="cn">
+  <p>Sustain</p>
+  <p id="s-param">0.0</p>
+</div>
+  <input type="range" id="freq" min="20" max="880" value="440" step="0.1">
+
+<div class="cn">
+  <p>release</p>
+  <p id="r-param">0.0</p>
+</div>
+  <input type="range" id="freq" min="20" max="880" value="440" step="0.1">
+</div>
+
 <div class="tone"></div>
 </body>
 </html>
