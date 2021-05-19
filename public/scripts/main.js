@@ -49,10 +49,10 @@ function visualize() {
     requestAnimationFrame(draw);
     synth.analyzeNode.getByteTimeDomainData(dataArray);
     
-    vcctx.fillStyle = 'rgb(3, 3, 3)';
+    vcctx.fillStyle = 'rgb(249, 249, 249)';
     vcctx.fillRect(0, 0, WIDTH, HEIGHT);
     vcctx.lineWidth = 1;
-    vcctx.strokeStyle = 'rgb(0, 255, 0)';
+    vcctx.strokeStyle = 'rgb(35, 35, 35)';
     vcctx.beginPath();
     const sliceWidth = WIDTH * 1.0 / bufferLength;
     
