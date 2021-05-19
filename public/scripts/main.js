@@ -30,7 +30,6 @@ volumeControl.addEventListener('input', function() {
 
 const freqControl = document.querySelector('#freq');
 freqControl.addEventListener('input', function() {
-  //gainNode.gain.value = this.value;
   synth.oscNode.frequency.setValueAtTime(this.value, synth.auctx.currentTime);
   
 }, false);

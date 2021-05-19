@@ -11,7 +11,6 @@ export default class Synth {
   
   init() {
     this.isPlaying = false;
-    this.intervalid = null;
     
     this.attack  = 0.5;
     this.decay   = 0.2;

@@ -1,5 +1,7 @@
 @charset "utf-8";
-@import url("./layoutChecker.css");
+@import url("./bootstrap-reboot.css");
+
+/*@import url("./layoutChecker.css");*/
 
 
 html {
@@ -8,30 +10,45 @@ html {
 
 body {
   height: 100%;
+  background-color: #f9f9f9;
+  color: #353535;
 }
 
 
-/*
-input {
-  width: 100%;
-  height: 2rem;
-}*/
-
-.tone {
-  height: 8rem;
-  background-color: maroon;
+.controller {
+  margin: 2rem;
 }
 
-.tone:active {
-  background-color: teal;
-}
-
-
-.sl-cntnr {
+.params {
   display:flex;
+  justify-content: space-between;
+  
+  /*padding: 0 1rem;*/
+}
+
+.valus {
+  text-align: right;
 }
 
 input {
   width: 100%;
 }
 
+
+.adsr {
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.adsr .valus {
+  margin: 0 1rem;
+
+}
+
+.adsr input {
+  /*width: 80%;*/
+  transform: rotate(90deg);
+  height: 6rem;
+  /*width: 20%;*/
+}
