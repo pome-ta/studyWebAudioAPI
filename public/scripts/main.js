@@ -12,8 +12,31 @@ const {tapStart, tapMove, tapEnd} = {
 const synth = new Synth();
 
 const toneControl = document.querySelector('.tone');
-const volumeControl = document.querySelector('#volume');
-const freqControl = document.querySelector('#freq');
+
+/* setControls */
+const volControl = document.querySelector('#vol-range');
+const frqControl = document.querySelector('#frq-range');
+
+const aControl = document.querySelector('#a-range');
+const dControl = document.querySelector('#d-range');
+const sControl = document.querySelector('#s-range');
+const rControl = document.querySelector('#r-range');
+
+/* setValues */
+const volValue = document.querySelector('#vol-param');
+const frqValue = document.querySelector('#frq-param');
+
+const aValue = document.querySelector('#a-param');
+const dValue = document.querySelector('#d-param');
+const sValue = document.querySelector('#s-param');
+const rValue = document.querySelector('#r-param');
+
+
+
+const setControls = [volControl, frqControl, aControl, dControl, sControl, rControl];
+const setValues = [volValue, frqValue, aValue, dValue, sValue, rValue];
+
+
 
 
 toneControl.addEventListener(tapStart, (e) => {
@@ -25,11 +48,12 @@ toneControl.addEventListener(tapEnd, () => {
   synth.end();
 });
 
-volumeControl.addEventListener('input', function() {
+volControl.addEventListener('input', function() {
   synth.masterVolume.gain.setValueAtTime(this.value, synth.auctx.currentTime);
+  
 });
 
-freqControl.addEventListener('input', function() {
+frqControl.addEventListener('input', function() {
   synth.oscNode.frequency.setValueAtTime(this.value, synth.auctx.currentTime);
 });
 
