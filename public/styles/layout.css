@@ -53,7 +53,7 @@ input {
 
 .adsr input {
   /*width: 80%;*/
-  transform: rotate(90deg);
+  transform: rotate(-90deg);
   height: 6rem;
   /*width: 20%;*/
 }
@@ -69,4 +69,7 @@ input {
   background-color: teal;
 }
 
-
+canvas {
+  marign: 0;
+  padding: 0;
+}

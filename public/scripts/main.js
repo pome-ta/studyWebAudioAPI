@@ -11,28 +11,30 @@ const {tapStart, tapMove, tapEnd} = {
 
 const synth = new Synth();
 
-document.querySelector('.tone').addEventListener(tapStart, (e) => {
+const toneControl = document.querySelector('.tone');
+const volumeControl = document.querySelector('#volume');
+const freqControl = document.querySelector('#freq');
+
+
+toneControl.addEventListener(tapStart, (e) => {
   e.preventDefault();
   synth.play();
 });
 
 
-document.querySelector('.tone').addEventListener(tapEnd, () => {
+toneControl.addEventListener(tapEnd, () => {
   synth.end();
 });
 
 
-
-const volumeControl = document.querySelector('#volume');
 volumeControl.addEventListener('input', function() {
-  synth.eg.gain.value = this.value;
+  synth.masterVolume.gain.setValueAtTime(this.value, synth.auctx.currentTime);
 });
 
-const freqControl = document.querySelector('#freq');
+
 freqControl.addEventListener('input', function() {
   synth.oscNode.frequency.setValueAtTime(this.value, synth.auctx.currentTime);
-  
-}, false);
+});
 
 
 /* visualizar */
@@ -49,7 +51,7 @@ function visualize() {
     requestAnimationFrame(draw);
     synth.analyzeNode.getByteTimeDomainData(dataArray);
     
-    vcctx.fillStyle = 'rgb(249, 249, 249)';
+    vcctx.fillStyle = 'rgb(233, 233, 233)';
     vcctx.fillRect(0, 0, WIDTH, HEIGHT);
     vcctx.lineWidth = 1;
     vcctx.strokeStyle = 'rgb(35, 35, 35)';
