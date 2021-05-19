@@ -21,16 +21,13 @@ toneControl.addEventListener(tapStart, (e) => {
   synth.play();
 });
 
-
 toneControl.addEventListener(tapEnd, () => {
   synth.end();
 });
 
-
 volumeControl.addEventListener('input', function() {
   synth.masterVolume.gain.setValueAtTime(this.value, synth.auctx.currentTime);
 });
-
 
 freqControl.addEventListener('input', function() {
   synth.oscNode.frequency.setValueAtTime(this.value, synth.auctx.currentTime);
