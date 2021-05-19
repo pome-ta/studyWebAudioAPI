@@ -132,7 +132,7 @@ const viCanvas = document.querySelector('.visualizer');
 const vcctx = viCanvas.getContext("2d");
 const intendedWidth = document.querySelector('.wrapper').clientWidth;
 viCanvas.setAttribute('width', intendedWidth);
-viCanvas.setAttribute('height', intendedWidth / 2);
+viCanvas.setAttribute('height', intendedWidth / 4);
 
 visualize();
 
