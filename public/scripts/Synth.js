@@ -12,10 +12,10 @@ export default class Synth {
   init() {
     this.isPlaying = false;
 
-    this.attack  = 0.5;
-    this.decay   = 0.2;
-    this.sustain = 0.5;
-    this.release = 0.3;
+    this.attack  = 0.0;
+    this.decay   = 0.0;
+    this.sustain = 0.0;
+    this.release = 0.0;
 
     this.auctx = new this.AudioContext();
     //this.gainNode = this.auctx.createGain();
@@ -50,14 +50,16 @@ export default class Synth {
 
 
 
-  play(attack, decay, sustain) {
+  play(wave, freq, attack, decay, sustain) {
     this.init();
     if (this.isPlaying) {
       this.oscNode.stop(0);
     }
+    this.oscNode.type = wave;
     this.attack = attack;
     this.decay = decay;
     this.sustain = sustain;
+    this.oscNode.frequency.value = freq;
     //this.eg.gain.setTargetAtTime(1, this.t0, this.t1);
     this.t0 = this.auctx.currentTime;
     this.t1 = this.t0 + this.attack;

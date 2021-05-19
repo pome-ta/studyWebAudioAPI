@@ -8,10 +8,12 @@ const {tapStart, tapMove, tapEnd} = {
 
 
 const synth = new Synth();
+const waves = ['sine', 'square', 'sawtooth', 'triangle'];
 
 const toneControl = document.querySelector('.tone');
 
 /* setControls */
+const wavControl = document.querySelector('#wav-range');
 const volControl = document.querySelector('#vol-range');
 const frqControl = document.querySelector('#frq-range');
 
@@ -21,6 +23,7 @@ const sControl = document.querySelector('#s-range');
 const rControl = document.querySelector('#r-range');
 
 /* setValues */
+const wavValue = document.querySelector('#wav-param');
 const volValue = document.querySelector('#vol-param');
 const frqValue = document.querySelector('#frq-param');
 
@@ -30,6 +33,8 @@ const sValue = document.querySelector('#s-param');
 const rValue = document.querySelector('#r-param');
 
 
+
+wavValue.innerHTML = waves[wavControl.value]
 // todo : python のzip 的なのを考えてたい
 const setControls = [volControl, frqControl, aControl, dControl, sControl, rControl];
 const setValues = [volValue, frqValue, aValue, dValue, sValue, rValue];
@@ -44,14 +49,18 @@ const setValues = [volValue, frqValue, aValue, dValue, sValue, rValue];
 
 
 
-
+wavControl.addEventListener('input', function() {
+  synth.oscNode.type = waves[this.value];
+  wavValue.innerHTML = waves[this.value];
+});
 toneControl.addEventListener(tapStart, (e) => {
   e.preventDefault();
-  synth.play(0,0,0);
+  //synth.oscNode.type = waves[wavControl.value];
+  synth.play(waves[wavControl.value], frqControl.value, aControl.value, dControl.value, sControl.value);
 });
 
 toneControl.addEventListener(tapEnd, () => {
-  synth.end(0);
+  synth.end(rControl.value);
 });
 
 volControl.addEventListener('input', function() {
