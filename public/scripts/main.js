@@ -1,38 +1,54 @@
-$(function () {
-    var keyboard = qwertyHancock({id: 'keyboard'});
+'use strict';
 
-    var context = new AudioContext();
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const context = new AudioContext();
+const settings = {
+  id: 'keyboard',
+  width: 600,
+  height: 150,
+  startNote: 'A2',
+  margin: 'auto',
+  whiteNotesColour: '#fff',
+  blackNotesColour: '#000',
+  borderColour: '#000',
+  activeColour: 'yellow',
+  octaves: 2,
+  musicalTyping: false
+}
 
-    /* VCO */
-    var vco = context.createOscillator();
-    vco.type = vco.SINE;
-    vco.frequency.value = this.frequency;
-    vco.start(0);
+let keyboard = new window.QwertyHancock(settings);
 
-    /* VCA */
-    var vca = context.createGain();
-    vca.gain.value = 0;
+const masterGain = context.createGain();
+let nodes = [];
 
-    /* Connections */
-    vco.connect(vca);
-    vca.connect(context.destination);
+masterGain.gain.value = 0.3;
+masterGain.connect(context.destination);
 
-    var isEmpty = function(obj) {
-        return Object.keys(obj).length === 0;
+keyboard.keyDown = function (note, frequency) {
+  const oscillator = context.createOscillator();
+  oscillator.type = 'square';
+  oscillator.frequency.value = frequency;
+  oscillator.connect(masterGain);
+  oscillator.start(0);
+
+  nodes.push(oscillator);
+};
+
+
+
+keyboard.keyUp = function (note, frequency) {
+  const newNodes = [];
+
+  for (let i = 0; i < nodes.length; i++) {
+    if (Math.round(nodes[i].frequency.value) === Math.round(frequency)) {
+      nodes[i].stop(0);
+      nodes[i].disconnect();
+    } else {
+      newNodes.push(nodes[i]);
     }
+  }
 
-    depressed_keys = {}
+  nodes = newNodes;
+};
 
-    keyboard.keyDown(function (note, frequency) {
-        vco.frequency.value = frequency;
-        vca.gain.value = 1;
-        depressed_keys[note] = true;
-    });
-
-    keyboard.keyUp(function (note, _) {
-        delete depressed_keys[note];
-        if (isEmpty(depressed_keys)) {
-            vca.gain.value = 0;
-        }
-    });
-});
+keyboard = new window.QwertyHancock(settings);

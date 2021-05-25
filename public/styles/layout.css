@@ -1,5 +1,5 @@
 @charset "utf-8";
-@import url("./bootstrap-reboot.css");
+/* @import url("./bootstrap-reboot.css"); */
 
 @import url("./layoutChecker.css");
 
@@ -17,7 +17,7 @@ body {
 .cn {
   display: flex;
   justify-content: space-between;
-  
+
 }
 
 input {
