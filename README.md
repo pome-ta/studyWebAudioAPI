@@ -2,11 +2,12 @@
 
 
 
-## デベロッパーツールのconsole に差し込む
+## シンセを作る参照にしているやつ
 
 
 [Playing notes with the Web Audio API Part 1 - Monophonic Synthesis](https://blog.chrislowis.co.uk/2013/06/05/playing-notes-web-audio-api.html)
 
+## デベロッパーツールのconsole に差し込む
 
 ```
 const AudioContext = window.AudioContext || window.webkitAudioContext;
