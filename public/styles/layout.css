@@ -1,5 +1,5 @@
 @charset "utf-8";
-/* @import url("./bootstrap-reboot.css"); */
+@import url("./bootstrap-reboot.css");
 
 @import url("./layoutChecker.css");
 
@@ -14,37 +14,3 @@ body {
   color: #353535;
 }
 
-.cn {
-  display: flex;
-  justify-content: space-between;
-
-}
-
-input {
-  width: 100%;
-  margin-bottom: 1rem;
-}
-
-p {
-  margin: 0;
-}
-
-
-.controller {
-  margin: 0 1rem;
-}
-
-
-.tone {
-  height: 8rem;
-  background-color: maroon;
-}
-
-.tone:active {
-  background-color: teal;
-}
-
-canvas {
-  marign: 0;
-  padding: 0;
-}
