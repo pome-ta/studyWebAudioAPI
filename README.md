@@ -2,6 +2,24 @@
 
 
 
+## デベロッパーツールのconsole に差し込む
+
+```
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+
+context = new AudioContext;
+oscillator = context.createOscillator();
+oscillator.frequency.value = 200;
+
+oscillator.connect(context.destination);
+
+oscillator.start(0);
+
+```
+
+
+
+
 
 [mmckegg / web-audio-school](https://github.com/mmckegg/web-audio-school)
 

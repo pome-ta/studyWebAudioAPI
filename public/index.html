@@ -8,62 +8,84 @@
   <script src="https://cdn.jsdelivr.net/npm/eruda@2.4.1/eruda.min.js"></script>
   <script>eruda.init();</script>
 
-  <script type="module" src="./scripts/main.js"></script>
+  <!--<script type="module" src="./scripts/main.js"></script>-->
+
+
+  
+      <script src="./scripts/main.js"></script>
+  
 
   <title>Web Audio API</title>
 </head>
 
 <body>
 
-<div class="wrapper">
-  <canvas class="visualizer" width="320" height="64"></canvas>
-</div>
+<div id="keyboard"></div>
 
-<div class="controller">
-<div class="cn">
-  <p>Wave</p>
-  <p id="wav-param">wave</p>
-</div>
-  <input type="range" id="wav-range" min="0" max="3" value="0" step="1">
-<div class="cn">
-  <p>Volume</p>
-  <p id="vol-param">0.0</p>
-</div>
-  <input type="range" id="vol-range" min="0.0" max="2.0" value="1.0" step="0.01">
-
-<div class="cn">
-  <p>Frequency</p>
-  <p id="frq-param">0.0</p>
-</div>
-  <input type="range" id="frq-range" min="20" max="880" value="440" step="1">
-
-<div class="cn">
-  <p>Attack</p>
-  <p id="a-param">0.00</p>
-</div>
-  <input type="range" id="a-range" min="0.00" max="5.0" value="0.2" step="0.01">
-
-<div class="cn">
-  <p>Decay</p>
-  <p id="d-param">0.0</p>
-</div>
-  <input type="range" id="d-range" min="0.00" max="5.0" value="0.3" step="0.01">
-
-<div class="cn">
-  <p>Sustain</p>
-  <p id="s-param">0.0</p>
-</div>
-  <input type="range" id="s-range" min="0.00" max="5.0" value="0.5" step="0.01">
-
-<div class="cn">
-  <p>release</p>
-  <p id="r-param">0.0</p>
-</div>
-  <input type="range" id="r-range" min="0.00" max="5.0" value="0.4" step="0.01">
-</div>
-
-<div class="tone"></div>
 </body>
+  <script src="https://cdn.jsdelivr.net/npm/qwerty-hancock@0.10.0/dist/qwerty-hancock.min.js"></script>
+  
+  
+  <script>
+            window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
+            var context = new AudioContext(),
+                settings = {
+                    id: 'keyboard',
+                    width: 600,
+                    height: 150,
+                    startNote: 'A2',
+                    margin: 'auto',
+                    whiteNotesColour: '#fff',
+                    blackNotesColour: '#000',
+                    borderColour: '#000',
+                    activeColour: 'yellow',
+                    octaves: 2,
+                    musicalTyping: false
+                },
+                keyboard = new QwertyHancock(settings);
+
+            masterGain = context.createGain();
+            nodes = [];
+
+            masterGain.gain.value = 0.3;
+            masterGain.connect(context.destination); 
+
+            keyboard.keyDown = function (note, frequency) {
+                var oscillator = context.createOscillator();
+                oscillator.type = 'square';
+                oscillator.frequency.value = frequency;
+                oscillator.connect(masterGain);
+                oscillator.start(0);
+
+                nodes.push(oscillator);
+            };
+
+            keyboard.keyUp = function (note, frequency) {
+                const newNodes = [];
+
+                for (var i = 0; i < nodes.length; i++) {
+                    if (Math.round(nodes[i].frequency.value) === Math.round(frequency)) {
+                        nodes[i].stop(0);
+                        nodes[i].disconnect();
+                    } else {
+                        newNodes.push(nodes[i]);
+                    }
+                }
+
+                nodes = newNodes;
+            };
+
+            keyboard = new QwertyHancock(settings);
+
+            
+            })();
+        </script>
+  
+  
+  
+  
+  
 </html>
 
 
