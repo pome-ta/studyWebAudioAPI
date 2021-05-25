@@ -10,8 +10,8 @@ const intendedWidth = document.querySelector('.synth').clientWidth;
 const settings = {
   id: 'keyboard',
   width: `${intendedWidth}`,
-  height: 128,
-  startNote: 'A3',
+  height: 150,
+  startNote: 'A2',
   margin: 'auto',
   whiteNotesColour: '#fff',
   blackNotesColour: '#000',
@@ -41,7 +41,7 @@ keyboard.keyDown = (_, frequency) => {
 
 
 
-keyboard.keyUp = (_ frequency) => {
+keyboard.keyUp = (_, frequency) => {
   const newNodes = [];
 
   for (let i = 0; i < nodes.length; i++) {
