@@ -1,0 +1,3 @@
+[submodule "public/scripts/qwerty-hancock"]
+	path = public/scripts/qwerty-hancock
+	url = https://github.com/stuartmemo/qwerty-hancock
