@@ -4,6 +4,10 @@
 
 ## デベロッパーツールのconsole に差し込む
 
+
+[Playing notes with the Web Audio API Part 1 - Monophonic Synthesis](https://blog.chrislowis.co.uk/2013/06/05/playing-notes-web-audio-api.html)
+
+
 ```
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 
@@ -18,12 +22,17 @@ oscillator.start(0);
 ```
 
 
+[Qwerty Hancock](https://stuartmemo.com/qwerty-hancock/)
+[qwerty-hancock/demo/index.html](https://github.com/stuartmemo/qwerty-hancock/blob/master/demo/index.html)
 
+読み込ませたものを、`window` で参照させるようにしたら読めるようになった？
+
+
+
+## キー指定の計算
 
 
 [mmckegg / web-audio-school](https://github.com/mmckegg/web-audio-school)
-
-## キー指定の計算
 
 [http://mmckegg.github.io/web-audio-school/](http://mmckegg.github.io/web-audio-school/)
 
@@ -40,7 +49,7 @@ oscillator.start(0);
 <-:  |_|  |  |_| |_|  |  |_| |_| |_|  |  |_| |_|  |  |_| |_| |_|  |  |_| |_|  :->
   :   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   :
   : A | B | C | D | E | F | G | A | B | C | D | E | F | G | A | B | C | D | E :
-  :___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___: 
+  :___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___|___:
     ^                           ^           ^               ^           ^
   220 Hz                      440 Hz      523.25 Hz       880 Hz     1174.65 Hz
 (-1 Octave)                 (middle A)                 (+1 Octave)
