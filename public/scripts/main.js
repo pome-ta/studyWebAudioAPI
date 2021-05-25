@@ -1,17 +1,22 @@
 'use strict';
 
+
 const AudioContext = window.AudioContext || window.webkitAudioContext;
+
 const context = new AudioContext();
+
+
+const intendedWidth = document.querySelector('.synth').clientWidth;
 const settings = {
   id: 'keyboard',
-  width: 600,
-  height: 150,
-  startNote: 'A2',
+  width: `${intendedWidth}`,
+  height: 128,
+  startNote: 'A3',
   margin: 'auto',
   whiteNotesColour: '#fff',
   blackNotesColour: '#000',
   borderColour: '#000',
-  activeColour: 'yellow',
+  activeColour: 'maroon',
   octaves: 2,
   musicalTyping: false
 }
@@ -24,7 +29,7 @@ let nodes = [];
 masterGain.gain.value = 0.3;
 masterGain.connect(context.destination);
 
-keyboard.keyDown = function (note, frequency) {
+keyboard.keyDown = (_, frequency) => {
   const oscillator = context.createOscillator();
   oscillator.type = 'square';
   oscillator.frequency.value = frequency;
@@ -36,7 +41,7 @@ keyboard.keyDown = function (note, frequency) {
 
 
 
-keyboard.keyUp = function (note, frequency) {
+keyboard.keyUp = (_ frequency) => {
   const newNodes = [];
 
   for (let i = 0; i < nodes.length; i++) {
@@ -51,4 +56,5 @@ keyboard.keyUp = function (note, frequency) {
   nodes = newNodes;
 };
 
+// xxx: 🤔
 keyboard = new window.QwertyHancock(settings);
