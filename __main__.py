@@ -1,7 +1,9 @@
+import sys
 import pathlib
-
 import ui
-import pystaScript.wkwebview as wkwebview
+
+sys.path.append(str(pathlib.Path.cwd()) + '/pythonista-webview')
+import wkwebview
 
 uri = pathlib.Path('./public/index.html')
 
