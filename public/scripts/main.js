@@ -2,9 +2,12 @@
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const context = new AudioContext();
+
+
+const intendedWidth = document.querySelector('.synth').clientWidth;
 const settings = {
   id: 'keyboard',
-  width: 600,
+  width: `${intendedWidth}`,
   height: 150,
   startNote: 'A2',
   margin: 'auto',
@@ -36,7 +39,7 @@ keyboard.keyDown = function (note, frequency) {
 
 
 
-keyboard.keyUp = function (note, frequency) {
+keyboard.keyUp = (_, frequency) => {
   const newNodes = [];
 
   for (let i = 0; i < nodes.length; i++) {
