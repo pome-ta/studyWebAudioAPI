@@ -25,23 +25,54 @@ const settings = {
 let keyboard = new window.QwertyHancock(settings);
 
 const masterGain = context.createGain();
-let nodes = [];
+//const analyzeNode = context.createAnalyser();
+
+/* VCO */
+const vco = context.createOscillator();
+vco.type = 'square';
+//vco.frequency.value = frequency;
+
+
+/* VCA */
+const vca = context.createGain();
+vca.gain.value = 0;
+
+
+
+/* Connections */
+vco.connect(vca);
+vca.connect(masterGain);
+//vca.connect(analyzeNode);
+//analyzeNode.connect(masterGain);
+
+
+
+
+//analyzeNode.connect(masterGain);
 
 masterGain.gain.value = 0.3;
 masterGain.connect(context.destination);
 
-keyboard.keyDown = (note, frequency) => {
-  const oscillator = context.createOscillator();
-  oscillator.type = 'square';
-  oscillator.frequency.value = frequency;
-  
-  const analyzeNode = context.createAnalyser();
-  oscillator.connect(analyzeNode);
-  analyzeNode.connect(masterGain);
-  oscillator.start(0);
-  visualize(analyzeNode);
-  
 
+vco.start(0);
+
+
+keyboard.keyDown = (_, frequency) => {
+  vco.frequency.value = frequency;
+  vca.gain.value = 1;
+};
+
+keyboard.keyUp = (_, _) => {
+  vca.gain.value = 0;
+};
+
+/*
+let nodes = [];
+
+
+
+keyboard.keyDown = (note, frequency) => {
+  
   nodes.push(oscillator);
 };
 
@@ -59,26 +90,17 @@ keyboard.keyUp = (note, frequency) => {
     }
   }
 
-/*
-  for (let i = 0; i < nodes.length; i++) {
-    if (Math.round(nodes[i].frequency.value) === Math.round(frequency)) {
-      nodes[i].stop(0);
-      nodes[i].disconnect();
-    } else {
-      newNodes.push(nodes[i]);
-    }
-  }
-*/
   nodes = newNodes;
 };
 
 // xxx: 🤔
 keyboard = new window.QwertyHancock(settings);
 
-
+*/
 
 
 /* visualizar */
+/*
 function visualize(analyzer) {
   const WIDTH = viCanvas.width;
   const HEIGHT = viCanvas.height;
@@ -120,5 +142,5 @@ const intendedWidth = document.querySelector('.wrapper').clientWidth;
 viCanvas.setAttribute('width', intendedWidth);
 viCanvas.setAttribute('height', intendedWidth / 4);
 
-
+*/
 
