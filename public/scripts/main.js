@@ -30,10 +30,11 @@ let nodes = [];
 masterGain.gain.value = 0.3;
 masterGain.connect(context.destination);
 
-keyboard.keyDown = (_, frequency) => {
+keyboard.keyDown = (note, frequency) => {
   const oscillator = context.createOscillator();
   oscillator.type = 'square';
   oscillator.frequency.value = frequency;
+  
   const analyzeNode = context.createAnalyser();
   oscillator.connect(analyzeNode);
   analyzeNode.connect(masterGain);
@@ -46,9 +47,19 @@ keyboard.keyDown = (_, frequency) => {
 
 
 
-keyboard.keyUp = (_, frequency) => {
+keyboard.keyUp = (note, frequency) => {
   const newNodes = [];
+  
+  for (const nd of nodes) {
+    if (Math.round(nd.frequency.value) === Math.round(frequency)) {
+      nd.stop(0);
+      nd.disconnect();
+    } else {
+      newNodes.push(nd);
+    }
+  }
 
+/*
   for (let i = 0; i < nodes.length; i++) {
     if (Math.round(nodes[i].frequency.value) === Math.round(frequency)) {
       nodes[i].stop(0);
@@ -57,7 +68,7 @@ keyboard.keyUp = (_, frequency) => {
       newNodes.push(nodes[i]);
     }
   }
-
+*/
   nodes = newNodes;
 };
 
