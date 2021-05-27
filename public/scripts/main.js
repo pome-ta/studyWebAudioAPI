@@ -1,12 +1,9 @@
 'use strict';
 
 
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-
-const context = new AudioContext();
-
 
 const keyboardWidth = document.querySelector('.synth').clientWidth;
+
 
 const settings = {
   id: 'keyboard',
@@ -23,9 +20,20 @@ const settings = {
 }
 
 let keyboard = new window.QwertyHancock(settings);
+
+
+
+
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const context = new AudioContext();
 const analyzeNode = context.createAnalyser();
+
+analyzeNode.minDecibels = -90;
+analyzeNode.maxDecibels = -10;
+analyzeNode.smoothingTimeConstant = 0.85;
+
 const masterGain = context.createGain();
-let nodes = [];
+
 
 masterGain.gain.value = 0.3;
 
@@ -35,7 +43,8 @@ analyzeNode.connect(context.destination);
 //analyzeNode.connect(masterGain);
 //masterGain.connect(context.destination);
 
-keyboard.keyDown = (_, frequency) => {
+let nodes = [];
+keyboard.keyDown = (note, frequency) => {
   const oscillator = context.createOscillator();
   oscillator.type = 'square';
   oscillator.frequency.value = frequency;
@@ -49,7 +58,7 @@ keyboard.keyDown = (_, frequency) => {
 
 
 
-keyboard.keyUp = (_, frequency) => {
+keyboard.keyUp = (note, frequency) => {
   const newNodes = [];
 
   for (const nd of nodes) {
@@ -77,7 +86,8 @@ function visualize() {
   const HEIGHT = viCanvas.height;
 
   analyzeNode.fftSize = 2048;
-  const bufferLength = analyzeNode.frequencyBinCount;
+  //const bufferLength = analyzeNode.frequencyBinCount;
+  const bufferLength = analyzeNode.fftSize;
   const dataArray = new Uint8Array(bufferLength);
   vcctx.clearRect(0, 0, WIDTH, HEIGHT);
 
@@ -113,5 +123,5 @@ const viCanvas = document.querySelector('.visualizer');
 const vcctx = viCanvas.getContext("2d");
 const intendedWidth = document.querySelector('.wrapper').clientWidth;
 viCanvas.setAttribute('width', intendedWidth);
-viCanvas.setAttribute('height', intendedWidth / 4);
+viCanvas.setAttribute('height', intendedWidth / 3);
 visualize()
