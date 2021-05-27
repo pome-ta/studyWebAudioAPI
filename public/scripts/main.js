@@ -84,6 +84,8 @@ function visualize() {
   const draw = () => {
     requestAnimationFrame(draw);
     analyzeNode.getByteTimeDomainData(dataArray);
+    
+    
 
     vcctx.fillStyle = 'rgb(233, 233, 233)';
     vcctx.fillRect(0, 0, WIDTH, HEIGHT);
@@ -102,7 +104,7 @@ function visualize() {
     }
     vcctx.lineTo(viCanvas.width, viCanvas.height / 2);
     vcctx.stroke();
-
+    
   };
   draw();
 }
