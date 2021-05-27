@@ -1,9 +1,7 @@
 'use strict';
 
 
-
 const keyboardWidth = document.querySelector('.synth').clientWidth;
-
 
 const settings = {
   id: 'keyboard',
@@ -20,8 +18,6 @@ const settings = {
 }
 
 let keyboard = new window.QwertyHancock(settings);
-
-
 
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -77,9 +73,9 @@ keyboard.keyUp = (note, frequency) => {
 //keyboard = new window.QwertyHancock(settings);
 
  
+
  
- 
- /* visualizar */
+/* Visualizar */
  
 function visualize() {
   const WIDTH = viCanvas.width;
@@ -94,8 +90,6 @@ function visualize() {
   const draw = () => {
     requestAnimationFrame(draw);
     analyzeNode.getByteTimeDomainData(dataArray);
-    
-    
 
     vcctx.fillStyle = 'rgb(233, 233, 233)';
     vcctx.fillRect(0, 0, WIDTH, HEIGHT);
@@ -124,4 +118,5 @@ const vcctx = viCanvas.getContext("2d");
 const intendedWidth = document.querySelector('.wrapper').clientWidth;
 viCanvas.setAttribute('width', intendedWidth);
 viCanvas.setAttribute('height', intendedWidth / 3);
-visualize()
+
+visualize();
