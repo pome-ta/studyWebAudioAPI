@@ -49,12 +49,12 @@ keyboard.keyDown = (_, frequency) => {
 keyboard.keyUp = (_, frequency) => {
   const newNodes = [];
 
-  for (let i = 0; i < nodes.length; i++) {
-    if (Math.round(nodes[i].frequency.value) === Math.round(frequency)) {
-      nodes[i].stop(0);
-      nodes[i].disconnect();
+  for (const nd of nodes) {
+    if (Math.round(nd.frequency.value) === Math.round(frequency)) {
+      nd.stop(0);
+      nd.disconnect();
     } else {
-      newNodes.push(nodes[i]);
+      newNodes.push(nd);
     }
   }
 
