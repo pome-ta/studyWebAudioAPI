@@ -23,24 +23,27 @@ const settings = {
 }
 
 let keyboard = new window.QwertyHancock(settings);
-
+const analyzeNode = context.createAnalyser();
 const masterGain = context.createGain();
 let nodes = [];
 
 masterGain.gain.value = 0.3;
-masterGain.connect(context.destination);
+
+masterGain.connect(analyzeNode);
+analyzeNode.connect(context.destination);
+
+//analyzeNode.connect(masterGain);
+//masterGain.connect(context.destination);
 
 keyboard.keyDown = (_, frequency) => {
   const oscillator = context.createOscillator();
   oscillator.type = 'square';
   oscillator.frequency.value = frequency;
-  const analyzeNode = context.createAnalyser();
-  oscillator.connect(analyzeNode);
-  analyzeNode.connect(masterGain);
-  oscillator.start(0);
-  visualize(analyzeNode);
   
-
+  //oscillator.connect(analyzeNode);
+  oscillator.connect(masterGain);
+  oscillator.start(0);
+  
   nodes.push(oscillator);
 };
 
@@ -62,24 +65,25 @@ keyboard.keyUp = (_, frequency) => {
 };
 
 // xxx: 🤔
-keyboard = new window.QwertyHancock(settings);
+//keyboard = new window.QwertyHancock(settings);
 
-
-
-
-/* visualizar */
-function visualize(analyzer) {
+ 
+ 
+ 
+ /* visualizar */
+ 
+function visualize() {
   const WIDTH = viCanvas.width;
   const HEIGHT = viCanvas.height;
 
-  analyzer.fftSize = 2048;
-  const bufferLength = analyzer.frequencyBinCount;
+  analyzeNode.fftSize = 2048;
+  const bufferLength = analyzeNode.frequencyBinCount;
   const dataArray = new Uint8Array(bufferLength);
   vcctx.clearRect(0, 0, WIDTH, HEIGHT);
 
   const draw = () => {
     requestAnimationFrame(draw);
-    analyzer.getByteTimeDomainData(dataArray);
+    analyzeNode.getByteTimeDomainData(dataArray);
 
     vcctx.fillStyle = 'rgb(233, 233, 233)';
     vcctx.fillRect(0, 0, WIDTH, HEIGHT);
@@ -108,5 +112,4 @@ const vcctx = viCanvas.getContext("2d");
 const intendedWidth = document.querySelector('.wrapper').clientWidth;
 viCanvas.setAttribute('width', intendedWidth);
 viCanvas.setAttribute('height', intendedWidth / 4);
-
- 
+visualize()
