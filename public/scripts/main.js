@@ -87,7 +87,8 @@ function visualize() {
   const dataArray = new Uint8Array(bufferLength);
   vcctx.clearRect(0, 0, WIDTH, HEIGHT);
 
-  const draw = () => {
+  draw();
+  function draw() {
     requestAnimationFrame(draw);
     analyzeNode.getByteTimeDomainData(dataArray);
 
@@ -108,9 +109,7 @@ function visualize() {
     }
     vcctx.lineTo(viCanvas.width, viCanvas.height / 2);
     vcctx.stroke();
-    
   };
-  draw();
 }
 
 const viCanvas = document.querySelector('.visualizer');
