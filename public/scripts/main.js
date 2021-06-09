@@ -76,7 +76,6 @@ keyboard.keyUp = (note, frequency) => {
 
  
 /* Visualizar */
- 
 function visualize() {
   const WIDTH = viCanvas.width;
   const HEIGHT = viCanvas.height;
@@ -112,7 +111,7 @@ function visualize() {
   };
 }
 
-const viCanvas = document.querySelector('.visualizer');
+const viCanvas = document.querySelector('#waveVisualizer');
 const vcctx = viCanvas.getContext("2d");
 const intendedWidth = document.querySelector('.wrapper').clientWidth;
 viCanvas.setAttribute('width', intendedWidth);
