@@ -76,6 +76,7 @@ keyboard.keyUp = (note, frequency) => {
 
  
 /* Visualizar */
+/*
 function visualize() {
   const WIDTH = viCanvas.width;
   const HEIGHT = viCanvas.height;
@@ -110,11 +111,52 @@ function visualize() {
     vcctx.stroke();
   };
 }
+*/
+
+function visualize(canvasTag) {
+  const vcctx = canvasTag.getContext("2d");
+  const intendedWidth = document.querySelector('.wrapper').clientWidth;
+  canvasTag.setAttribute('width', intendedWidth);
+  canvasTag.setAttribute('height', intendedWidth / 3)
+  const WIDTH = canvasTag.width;
+  const HEIGHT = canvasTag.height;
+
+  analyzeNode.fftSize = 2048;
+  //const bufferLength = analyzeNode.frequencyBinCount;
+  const bufferLength = analyzeNode.fftSize;
+  const dataArray = new Uint8Array(bufferLength);
+  vcctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+  draw();
+  function draw() {
+    requestAnimationFrame(draw);
+    analyzeNode.getByteTimeDomainData(dataArray);
+
+    vcctx.fillStyle = 'rgb(233, 233, 233)';
+    vcctx.fillRect(0, 0, WIDTH, HEIGHT);
+    vcctx.lineWidth = 1;
+    vcctx.strokeStyle = 'rgb(35, 35, 35)';
+    vcctx.beginPath();
+    const sliceWidth = WIDTH * 1.0 / bufferLength;
+
+    let x = 0;
+    for (let i = 0; i < bufferLength; i++) {
+      const v = dataArray[i] / 128.0;
+      const y = v * HEIGHT / 2;
+      // todo: ショートハンドすぎる？
+      i === 0 ? vcctx.moveTo(x, y) : vcctx.lineTo(x, y);
+      x += sliceWidth;
+    }
+    vcctx.lineTo(canvasTag.width, canvasTag.height / 2);
+    vcctx.stroke();
+  };
+}
+
 
 const viCanvas = document.querySelector('#waveVisualizer');
-const vcctx = viCanvas.getContext("2d");
-const intendedWidth = document.querySelector('.wrapper').clientWidth;
-viCanvas.setAttribute('width', intendedWidth);
-viCanvas.setAttribute('height', intendedWidth / 3);
+//const vcctx = viCanvas.getContext("2d");
+//const intendedWidth = document.querySelector('.wrapper').clientWidth;
+//viCanvas.setAttribute('width', intendedWidth);
+//viCanvas.setAttribute('height', intendedWidth / 3);
 
-visualize();
+visualize(viCanvas);
