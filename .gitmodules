@@ -1,6 +1,4 @@
 [submodule "public/scripts/qwerty-hancock"]
-	path = public/scripts/qwerty-hancock
-	url = git@github.com:pome-ta/qwerty-hancock.git
 [submodule "pythonista-webview"]
 	path = pythonista-webview
 	url = https://pome-ta@github.com/pome-ta/pythonista-webview
