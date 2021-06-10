@@ -153,10 +153,13 @@ function visualize(canvasTag) {
 }
 
 
-const viCanvas = document.querySelector('#waveVisualizer');
+const waveCanvas = document.querySelector('#waveVisualizer');
+const barCanvas = document.querySelector('#barVisualizer');
+
 //const vcctx = viCanvas.getContext("2d");
 //const intendedWidth = document.querySelector('.wrapper').clientWidth;
 //viCanvas.setAttribute('width', intendedWidth);
 //viCanvas.setAttribute('height', intendedWidth / 3);
 
-visualize(viCanvas);
+visualize(waveCanvas);
+visualize(barCanvas);
