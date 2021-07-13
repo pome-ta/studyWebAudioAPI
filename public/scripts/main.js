@@ -22,19 +22,25 @@ let keyboard = new window.QwertyHancock(settings);
 
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const context = new AudioContext();
-const analyzeNode = context.createAnalyser();
+const wavAnalyzeNode = context.createAnalyser();
+const barAnalyzeNode = context.createAnalyser();
 
-analyzeNode.minDecibels = -90;
-analyzeNode.maxDecibels = -10;
-analyzeNode.smoothingTimeConstant = 0.85;
+wavAnalyzeNode.minDecibels = -90;
+wavAnalyzeNode.maxDecibels = -10;
+wavAnalyzeNode.smoothingTimeConstant = 0.85;
+
+barAnalyzeNode.minDecibels = -90;
+barAnalyzeNode.maxDecibels = -10;
+barAnalyzeNode.smoothingTimeConstant = 0.85;
 
 const masterGain = context.createGain();
 
 
-masterGain.gain.value = 0.3;
+masterGain.gain.value = 0.5;
 
-masterGain.connect(analyzeNode);
-analyzeNode.connect(context.destination);
+masterGain.connect(wavAnalyzeNode);
+wavAnalyzeNode.connect(barAnalyzeNode);
+barAnalyzeNode.connect(context.destination);
 
 //analyzeNode.connect(masterGain);
 //masterGain.connect(context.destination);
@@ -113,23 +119,25 @@ function visualize() {
 }
 */
 
-function wavVisualize(canvasTag) {
+function wavVisualize(canvasTag, analyze) {
   const vcctx = canvasTag.getContext("2d");
   const intendedWidth = document.querySelector('.wrapper').clientWidth;
   canvasTag.setAttribute('width', intendedWidth);
   canvasTag.setAttribute('height', intendedWidth / 3)
   const WIDTH = canvasTag.width;
   const HEIGHT = canvasTag.height;
+  
+  const wavAnalyze = analyze;
 
-  //analyzeNode.fftSize = 2048;
-  const bufferLength = 2048;//analyzeNode.fftSize;
+  wavAnalyze.fftSize = 2048;
+  const bufferLength = wavAnalyze.fftSize;
   const dataArray = new Uint8Array(bufferLength);
   vcctx.clearRect(0, 0, WIDTH, HEIGHT);
 
   draw();
   function draw() {
     requestAnimationFrame(draw);
-    analyzeNode.getByteTimeDomainData(dataArray);
+    wavAnalyze.getByteTimeDomainData(dataArray);
 
     vcctx.fillStyle = 'rgb(233, 233, 233)';
     vcctx.fillRect(0, 0, WIDTH, HEIGHT);
@@ -152,21 +160,20 @@ function wavVisualize(canvasTag) {
 }
 
 
-function barVisualize(canvasTag) {
+function barVisualize(canvasTag, analyze) {
   const vcctx = canvasTag.getContext("2d");
   const intendedWidth = document.querySelector('.wrapper').clientWidth;
   canvasTag.setAttribute('width', intendedWidth);
   canvasTag.setAttribute('height', intendedWidth / 3)
   const WIDTH = canvasTag.width;
   const HEIGHT = canvasTag.height;
+  const barAnalyze = analyze;
+  barAnalyze.fftSize = 256;
 
-  //analyzeNode.fftSize = 256;
-  const 
-  fftSize = 256;
   
-  console.log(analyzeNode);
-  /*
-  const bufferLengthAlt = analyzeNode.frequencyBinCount;
+  const bufferLengthAlt = barAnalyze.frequencyBinCount;
+  console.log(bufferLengthAlt);
+  
 
   const dataArrayAlt = new Uint8Array(bufferLengthAlt);
   vcctx.clearRect(0, 0, WIDTH, HEIGHT);
@@ -174,20 +181,24 @@ function barVisualize(canvasTag) {
   drawAlt();
   function drawAlt() {
     requestAnimationFrame(drawAlt);
-    analyser.getByteFrequencyData(dataArrayAlt);
+    
+    barAnalyze.getByteFrequencyData(dataArrayAlt);
+    
     vcctx.fillStyle = 'rgb(233, 233, 233)';
     vcctx.fillRect(0, 0, WIDTH, HEIGHT);
-    const barWidth = (WIDTH / bufferLengthAlt) * 2.5;
-    let barHeight;
-    let 0;
     
+    const barWidth = (WIDTH / bufferLengthAlt) * 2.5;
+    
+    let barHeight;
+    let x = 0;
+
     for (let i = 0; i < bufferLengthAlt; i++) {
       barHeight = dataArrayAlt[i];
-      vcctx.fillStyle = `rgb(${barHeight+100}, 50, 50)`;
+      vcctx.fillStyle = `rgb(${barHeight+64}, 64, 64)`;
       vcctx.fillRect(x,HEIGHT-barHeight/2,barWidth,barHeight/2);
       x += barWidth + 1;
     }
-  };/*
+  };
 }
 
 
@@ -200,6 +211,6 @@ const barCanvas = document.querySelector('#barVisualizer');
 //viCanvas.setAttribute('width', intendedWidth);
 //viCanvas.setAttribute('height', intendedWidth / 3);
 
-wavVisualize(waveCanvas);
-barVisualize(barCanvas);
+wavVisualize(waveCanvas, wavAnalyzeNode);
+barVisualize(barCanvas, barAnalyzeNode);
 //wavVisualize(barCanvas);
