@@ -113,7 +113,7 @@ function visualize() {
 }
 */
 
-function visualize(canvasTag) {
+function wavVisualize(canvasTag) {
   const vcctx = canvasTag.getContext("2d");
   const intendedWidth = document.querySelector('.wrapper').clientWidth;
   canvasTag.setAttribute('width', intendedWidth);
@@ -121,9 +121,8 @@ function visualize(canvasTag) {
   const WIDTH = canvasTag.width;
   const HEIGHT = canvasTag.height;
 
-  analyzeNode.fftSize = 2048;
-  //const bufferLength = analyzeNode.frequencyBinCount;
-  const bufferLength = analyzeNode.fftSize;
+  //analyzeNode.fftSize = 2048;
+  const bufferLength = 2048;//analyzeNode.fftSize;
   const dataArray = new Uint8Array(bufferLength);
   vcctx.clearRect(0, 0, WIDTH, HEIGHT);
 
@@ -153,6 +152,46 @@ function visualize(canvasTag) {
 }
 
 
+function barVisualize(canvasTag) {
+  const vcctx = canvasTag.getContext("2d");
+  const intendedWidth = document.querySelector('.wrapper').clientWidth;
+  canvasTag.setAttribute('width', intendedWidth);
+  canvasTag.setAttribute('height', intendedWidth / 3)
+  const WIDTH = canvasTag.width;
+  const HEIGHT = canvasTag.height;
+
+  //analyzeNode.fftSize = 256;
+  const 
+  fftSize = 256;
+  
+  console.log(analyzeNode);
+  /*
+  const bufferLengthAlt = analyzeNode.frequencyBinCount;
+
+  const dataArrayAlt = new Uint8Array(bufferLengthAlt);
+  vcctx.clearRect(0, 0, WIDTH, HEIGHT);
+  
+  drawAlt();
+  function drawAlt() {
+    requestAnimationFrame(drawAlt);
+    analyser.getByteFrequencyData(dataArrayAlt);
+    vcctx.fillStyle = 'rgb(233, 233, 233)';
+    vcctx.fillRect(0, 0, WIDTH, HEIGHT);
+    const barWidth = (WIDTH / bufferLengthAlt) * 2.5;
+    let barHeight;
+    let 0;
+    
+    for (let i = 0; i < bufferLengthAlt; i++) {
+      barHeight = dataArrayAlt[i];
+      vcctx.fillStyle = `rgb(${barHeight+100}, 50, 50)`;
+      vcctx.fillRect(x,HEIGHT-barHeight/2,barWidth,barHeight/2);
+      x += barWidth + 1;
+    }
+  };/*
+}
+
+
+
 const waveCanvas = document.querySelector('#waveVisualizer');
 const barCanvas = document.querySelector('#barVisualizer');
 
@@ -161,5 +200,6 @@ const barCanvas = document.querySelector('#barVisualizer');
 //viCanvas.setAttribute('width', intendedWidth);
 //viCanvas.setAttribute('height', intendedWidth / 3);
 
-visualize(waveCanvas);
-visualize(barCanvas);
+wavVisualize(waveCanvas);
+barVisualize(barCanvas);
+//wavVisualize(barCanvas);
