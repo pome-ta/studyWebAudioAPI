@@ -42,13 +42,17 @@ masterGain.connect(wavAnalyzeNode);
 wavAnalyzeNode.connect(barAnalyzeNode);
 barAnalyzeNode.connect(context.destination);
 
+// xxx: アナライザが先かマスターが先か
 //analyzeNode.connect(masterGain);
 //masterGain.connect(context.destination);
 
 let nodes = [];
 keyboard.keyDown = (note, frequency) => {
   const oscillator = context.createOscillator();
+  //oscillator.type = 'sine';
   oscillator.type = 'square';
+  //oscillator.type = 'sawtooth';
+  //oscillator.type = 'triangle';
   oscillator.frequency.value = frequency;
   
   //oscillator.connect(analyzeNode);
@@ -81,43 +85,6 @@ keyboard.keyUp = (note, frequency) => {
  
 
  
-/* Visualizar */
-/*
-function visualize() {
-  const WIDTH = viCanvas.width;
-  const HEIGHT = viCanvas.height;
-
-  analyzeNode.fftSize = 2048;
-  //const bufferLength = analyzeNode.frequencyBinCount;
-  const bufferLength = analyzeNode.fftSize;
-  const dataArray = new Uint8Array(bufferLength);
-  vcctx.clearRect(0, 0, WIDTH, HEIGHT);
-
-  draw();
-  function draw() {
-    requestAnimationFrame(draw);
-    analyzeNode.getByteTimeDomainData(dataArray);
-
-    vcctx.fillStyle = 'rgb(233, 233, 233)';
-    vcctx.fillRect(0, 0, WIDTH, HEIGHT);
-    vcctx.lineWidth = 1;
-    vcctx.strokeStyle = 'rgb(35, 35, 35)';
-    vcctx.beginPath();
-    const sliceWidth = WIDTH * 1.0 / bufferLength;
-
-    let x = 0;
-    for (let i = 0; i < bufferLength; i++) {
-      const v = dataArray[i] / 128.0;
-      const y = v * HEIGHT / 2;
-      // todo: ショートハンドすぎる？
-      i === 0 ? vcctx.moveTo(x, y) : vcctx.lineTo(x, y);
-      x += sliceWidth;
-    }
-    vcctx.lineTo(viCanvas.width, viCanvas.height / 2);
-    vcctx.stroke();
-  };
-}
-*/
 
 function wavVisualize(canvasTag, analyze) {
   const vcctx = canvasTag.getContext("2d");
@@ -206,11 +173,6 @@ function barVisualize(canvasTag, analyze) {
 const waveCanvas = document.querySelector('#waveVisualizer');
 const barCanvas = document.querySelector('#barVisualizer');
 
-//const vcctx = viCanvas.getContext("2d");
-//const intendedWidth = document.querySelector('.wrapper').clientWidth;
-//viCanvas.setAttribute('width', intendedWidth);
-//viCanvas.setAttribute('height', intendedWidth / 3);
 
 wavVisualize(waveCanvas, wavAnalyzeNode);
 barVisualize(barCanvas, barAnalyzeNode);
-//wavVisualize(barCanvas);
