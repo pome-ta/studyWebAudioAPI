@@ -49,8 +49,8 @@ barAnalyzeNode.connect(context.destination);
 let nodes = [];
 keyboard.keyDown = (note, frequency) => {
   const oscillator = context.createOscillator();
-  //oscillator.type = 'sine';
-  oscillator.type = 'square';
+  oscillator.type = 'sine';
+  //oscillator.type = 'square';
   //oscillator.type = 'sawtooth';
   //oscillator.type = 'triangle';
   oscillator.frequency.value = frequency;
@@ -82,9 +82,6 @@ keyboard.keyUp = (note, frequency) => {
 // xxx: 🤔
 //keyboard = new window.QwertyHancock(settings);
 
- 
-
- 
 
 function wavVisualize(canvasTag, analyze) {
   const vcctx = canvasTag.getContext("2d");
@@ -135,9 +132,8 @@ function barVisualize(canvasTag, analyze) {
   const WIDTH = canvasTag.width;
   const HEIGHT = canvasTag.height;
   const barAnalyze = analyze;
-  barAnalyze.fftSize = 256;
+  barAnalyze.fftSize = 512;
 
-  
   const bufferLengthAlt = barAnalyze.frequencyBinCount;
   console.log(bufferLengthAlt);
   
