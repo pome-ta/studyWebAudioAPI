@@ -49,8 +49,8 @@ barAnalyzeNode.connect(context.destination);
 let nodes = [];
 keyboard.keyDown = (note, frequency) => {
   const oscillator = context.createOscillator();
-  oscillator.type = 'sine';
-  //oscillator.type = 'square';
+  //oscillator.type = 'sine';
+  oscillator.type = 'square';
   //oscillator.type = 'sawtooth';
   //oscillator.type = 'triangle';
   oscillator.frequency.value = frequency;
