@@ -83,7 +83,7 @@ keyboard.keyUp = (note, frequency) => {
 //keyboard = new window.QwertyHancock(settings);
 
 
-
+// Visualize
 const waveCanvas = document.querySelector('#waveVisualizer');
 const barCanvas = document.querySelector('#barVisualizer');
 
