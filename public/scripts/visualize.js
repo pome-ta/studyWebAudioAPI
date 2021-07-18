@@ -1,8 +1,10 @@
+const setting_height = 8;
+
 export function wavVisualize(canvasTag, analyze) {
   const vcctx = canvasTag.getContext("2d");
   const intendedWidth = document.querySelector('.wrapper').clientWidth;
   canvasTag.setAttribute('width', intendedWidth);
-  canvasTag.setAttribute('height', intendedWidth / 3)
+  canvasTag.setAttribute('height', intendedWidth / setting_height)
   const WIDTH = canvasTag.width;
   const HEIGHT = canvasTag.height;
   
@@ -43,14 +45,14 @@ export function barVisualize(canvasTag, analyze) {
   const vcctx = canvasTag.getContext("2d");
   const intendedWidth = document.querySelector('.wrapper').clientWidth;
   canvasTag.setAttribute('width', intendedWidth);
-  canvasTag.setAttribute('height', intendedWidth / 3)
+  canvasTag.setAttribute('height', intendedWidth / setting_height)
   const WIDTH = canvasTag.width;
   const HEIGHT = canvasTag.height;
+  console.log('t' + HEIGHT);
   const barAnalyze = analyze;
   barAnalyze.fftSize = 512;
 
   const bufferLengthAlt = barAnalyze.frequencyBinCount;
-  console.log(bufferLengthAlt);
   
 
   const dataArrayAlt = new Uint8Array(bufferLengthAlt);
@@ -73,7 +75,7 @@ export function barVisualize(canvasTag, analyze) {
     for (let i = 0; i < bufferLengthAlt; i++) {
       barHeight = dataArrayAlt[i];
       vcctx.fillStyle = `rgb(${barHeight+64}, 64, 64)`;
-      vcctx.fillRect(x,HEIGHT-barHeight/2,barWidth,barHeight/2);
+      vcctx.fillRect(x,HEIGHT-barHeight/setting_height,barWidth,barHeight/setting_height);
       x += barWidth + 1;
     }
   };
