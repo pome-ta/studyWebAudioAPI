@@ -1,27 +1,16 @@
 # studyWebAudioAPI
 
-
-
 ## エンベロープ
-
-
-
-
 
 ## ビジュアライザー
 
 コピペして使ってるから整理したい
 
-
-
-
-
 ## シンセを作る参照にしているやつ
-
 
 [Playing notes with the Web Audio API Part 1 - Monophonic Synthesis](https://blog.chrislowis.co.uk/2013/06/05/playing-notes-web-audio-api.html)
 
-## デベロッパーツールのconsole に差し込む
+## デベロッパーツールの console に差し込む
 
 ```
 const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -36,21 +25,16 @@ oscillator.start(0);
 
 ```
 
-
 [Qwerty Hancock](https://stuartmemo.com/qwerty-hancock/)
 [qwerty-hancock/demo/index.html](https://github.com/stuartmemo/qwerty-hancock/blob/master/demo/index.html)
 
 読み込ませたものを、`window` で参照させるようにしたら読めるようになった？
 
-
-
 ## キー指定の計算
-
 
 [mmckegg / web-audio-school](https://github.com/mmckegg/web-audio-school)
 
 [http://mmckegg.github.io/web-audio-school/](http://mmckegg.github.io/web-audio-school/)
-
 
 ### Chromatic Scale
 
@@ -83,11 +67,7 @@ oscillator.frequency.value = 440 * Math.pow(2, 7 / 12) // 659.255...
 oscillator.frequency.value = 440 * Math.pow(2, -14 / 12) // 195.998...
 ```
 
-
-
-
-
-## classわけわけ
+## class わけわけ
 
 Pythonic な書き方になりそうだけど
 
@@ -96,21 +76,18 @@ Pythonic な書き方になりそうだけど
 - import 時の波括弧`{ hoge }` は、`export default` を使ってないとき
 - export は、`export default` 推奨
 
-
 [02.とりあえず音を出す](https://www.g200kg.com/jp/docs/webaudio/generatesound.html)
 
-
-
 [Web Audio API | MDN Web Docs](https://developer.mozilla.org/ja/docs/Web/API/Web_Audio_API#guides_and_tutorials)
-
 
 ## 概念
 
 - 音声操作を`AudioContex` 内の操作として実現
 - 基本的な操作は`AudioNode` として表現、接続を`audio routing graph`
-- 異なる複数音源も1つの Contex で扱える
+- 異なる複数音源も 1 つの Contex で扱える
 
 sound intensities (samples)
+
 - 数学的に計算されたもの
   - [`OscillatorNode`](https://developer.mozilla.org/ja/docs/Web/API/OscillatorNode) など
 - 音声ファイルや動画ファイル
@@ -119,6 +96,4 @@ sound intensities (samples)
 - オーディオストリーム
   - [`MediaStreamAudioSourceNode`](https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamAudioSourceNode)
 
-
 Web Audio API 理論の詳細 -> [Basic concepts behind Web Audio API](https://developer.mozilla.org/ja/docs/Web/API/Web_Audio_API/Basic_concepts_behind_Web_Audio_API)
-
